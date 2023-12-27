@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- //////////////////// Links //////////////////// -->
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${base_radius}" length="${base_length}"/>
+            </geometry>
+            <origin xyz="0 0 ${-base_length/2.0}" rpy="0 0 0"/>
+            <material name="blue"/>
+        </visual>
+    </link>
+
+    <!-- arm support link -->
+
+    <xacro:arm_support_link prefix="up_left"/>
+    <xacro:arm_support_link prefix="up_right"/>
+    <xacro:arm_support_link prefix="down_left"/>
+    <xacro:arm_support_link prefix="down_right"/>
+
+    <!-- arm sphere link -->
+
+    <xacro:arm_sphere_link prefix="first_up_left"/>
+    <xacro:arm_sphere_link prefix="first_up_right"/>
+    <xacro:arm_sphere_link prefix="first_down_left"/>
+    <xacro:arm_sphere_link prefix="first_down_right"/>
+    <xacro:arm_sphere_link prefix="second_up_left"/>
+    <xacro:arm_sphere_link prefix="second_up_right"/>
+    <xacro:arm_sphere_link prefix="second_down_left"/>
+    <xacro:arm_sphere_link prefix="second_down_right"/>
+    <xacro:arm_sphere_link prefix="foot_up_left"/>
+    <xacro:arm_sphere_link prefix="foot_up_right"/>
+    <xacro:arm_sphere_link prefix="foot_down_left"/>
+    <xacro:arm_sphere_link prefix="foot_down_right"/>
+
+    <!-- arm link -->
+
+    <xacro:arm_link prefix="first_up_left"/>
+    <xacro:arm_link prefix="first_up_right"/>
+    <xacro:arm_link prefix="first_down_left"/>
+    <xacro:arm_link prefix="first_down_right"/>
+    <xacro:arm_link prefix="second_up_left"/>
+    <xacro:arm_link prefix="second_up_right"/>
+    <xacro:arm_link prefix="second_down_left"/>
+    <xacro:arm_link prefix="second_down_right"/>
+
+    <link name="base_footprint"/>
+
+    <!-- //////////////////// Joints //////////////////// -->
+    
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 ${base_length * 4}" rpy="0 0 0"/>
+    </joint>
+    
+    <!-- base support -->
+
+    <joint name="base_up_left_arm_support_joint" type="revolute">
+        <parent link="base_link"/>
+        <child link="up_left_arm_support_link"/>
+        <origin xyz="${base_radius/1.4} ${base_radius/2.0} ${arm_support_length/2.0}" rpy="0 ${-pi/2.0} ${-45*(pi/180)}"/>
+        <limit lower="${-20*(pi/180)}" upper="${20*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="base_up_right_arm_support_joint" type="revolute">
+        <parent link="base_link"/>
+        <child link="up_right_arm_support_link"/>
+        <origin xyz="${base_radius/1.4} ${-base_radius/2.0} ${arm_support_length/2.0}" rpy="0 ${-pi/2.0} ${-135*(pi/180)}"/>
+        <limit lower="${-20*(pi/180)}" upper="${20*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="base_down_left_arm_support_joint" type="revolute">
+        <parent link="base_link"/>
+        <child link="down_left_arm_support_link"/>
+        <origin xyz="${-base_radius/1.4} ${base_radius/2.0} ${arm_support_length/2.0}" rpy="0 ${-pi/2.0} ${45*(pi/180)}"/>
+        <limit lower="${-20*(pi/180)}" upper="${20*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="base_down_right_arm_support_joint" type="revolute">
+        <parent link="base_link"/>
+        <child link="down_right_arm_support_link"/>
+        <origin xyz="${-base_radius/1.4} ${-base_radius/2.0} ${arm_support_length/2.0}" rpy="0 ${-pi/2.0} ${135*(pi/180)}"/>
+        <limit lower="${-20*(pi/180)}" upper="${20*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <!-- first Spheres -->
+
+    <joint name="up_left_arm_support_first_up_left_arm_sphere_joint" type="revolute">
+        <parent link="up_left_arm_support_link"/>
+        <child link="first_up_left_arm_sphere_link"/>
+        <origin xyz="${arm_support_length/2.0} 0 0" rpy="${10*(pi/180)} ${pi/2.0} 0"/>
+        <limit lower="0" upper="${60*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="up_right_arm_support_first_up_right_arm_sphere_joint" type="revolute">
+        <parent link="up_right_arm_support_link"/>
+        <child link="first_up_right_arm_sphere_link"/>
+        <origin xyz="${arm_support_length/2.0} 0 0" rpy="${10*(pi/180)} ${pi/2.0} 0"/>
+        <limit lower="0" upper="${60*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="down_left_arm_support_first_down_left_arm_sphere_joint" type="revolute">
+        <parent link="down_left_arm_support_link"/>
+        <child link="first_down_left_arm_sphere_link"/>
+        <origin xyz="${arm_support_length/2.0} 0 0" rpy="${10*(pi/180)} ${pi/2.0} 0"/>
+        <limit lower="0" upper="${60*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="down_right_arm_support_first_down_right_arm_sphere_joint" type="revolute">
+        <parent link="down_right_arm_support_link"/>
+        <child link="first_down_right_arm_sphere_link"/>
+        <origin xyz="${arm_support_length/2.0} 0 0" rpy="${10*(pi/180)} ${pi/2.0} 0"/>
+        <limit lower="0" upper="${60*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <!-- first arms -->
+
+    <joint name="first_up_left_arm_sphere_first_up_left_arm_joint" type="fixed">
+        <parent link="first_up_left_arm_sphere_link"/>
+        <child link="first_up_left_arm_link"/>
+        <origin xyz="0 ${-arm_support_radius/2.0} ${sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="first_up_right_arm_sphere_first_up_right_arm_joint" type="fixed">
+        <parent link="first_up_right_arm_sphere_link"/>
+        <child link="first_up_right_arm_link"/>
+        <origin xyz="0 ${-arm_support_radius/2.0} ${sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="first_down_left_arm_sphere_first_down_left_arm_joint" type="fixed">
+        <parent link="first_down_left_arm_sphere_link"/>
+        <child link="first_down_left_arm_link"/>
+        <origin xyz="0 ${-arm_support_radius/2.0} ${sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="first_down_right_arm_sphere_first_down_right_arm_joint" type="fixed">
+        <parent link="first_down_right_arm_sphere_link"/>
+        <child link="first_down_right_arm_link"/>
+        <origin xyz="0 ${-arm_support_radius/2.0} ${sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <!-- second Spheres -->
+
+    <joint name="first_up_left_arm_second_up_left_arm_sphere_joint" type="revolute">
+        <parent link="first_up_left_arm_link"/>
+        <child link="second_up_left_arm_sphere_link"/>
+        <origin xyz="0 ${arm_length + sphere_radius} ${-arm_radius}" rpy="${-pi/2.0} 0 0"/>
+        <limit lower="0" upper="${60*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="first_up_right_arm_second_up_right_arm_sphere_joint" type="revolute">
+        <parent link="first_up_right_arm_link"/>
+        <child link="second_up_right_arm_sphere_link"/>
+        <origin xyz="0 ${arm_length + sphere_radius} ${-arm_radius}" rpy="${-pi/2.0} 0 0"/>
+        <limit lower="0" upper="${60*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="first_down_left_arm_second_down_left_arm_sphere_joint" type="revolute">
+        <parent link="first_down_left_arm_link"/>
+        <child link="second_down_left_arm_sphere_link"/>
+        <origin xyz="0 ${arm_length + sphere_radius} ${-arm_radius}" rpy="${-pi/2.0} 0 0"/>
+        <limit lower="0" upper="${60*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="first_down_right_arm_second_down_right_arm_sphere_joint" type="revolute">
+        <parent link="first_down_right_arm_link"/>
+        <child link="second_down_right_arm_sphere_link"/>
+        <origin xyz="0 ${arm_length + sphere_radius} ${-arm_radius}" rpy="${-pi/2.0} 0 0"/>
+        <limit lower="0" upper="${60*(pi/180)}" effort="100" velocity="100"/>
+    </joint>
+
+    <!-- second arms -->
+
+    <joint name="second_up_left_arm_sphere_second_up_left_arm_joint" type="fixed">
+        <parent link="second_up_left_arm_sphere_link"/>
+        <child link="second_up_left_arm_link"/>
+        <origin xyz="0 ${-sphere_radius} ${sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="second_up_right_arm_sphere_second_up_right_arm_joint" type="fixed">
+        <parent link="second_up_right_arm_sphere_link"/>
+        <child link="second_up_right_arm_link"/>
+        <origin xyz="0 ${-sphere_radius} ${sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="second_down_left_arm_sphere_second_down_left_arm_joint" type="fixed">
+        <parent link="second_down_left_arm_sphere_link"/>
+        <child link="second_down_left_arm_link"/>
+        <origin xyz="0 ${-sphere_radius} ${sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="second_down_right_arm_sphere_second_down_right_arm_joint" type="fixed">
+        <parent link="second_down_right_arm_sphere_link"/>
+        <child link="second_down_right_arm_link"/>
+        <origin xyz="0 ${-sphere_radius} ${sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Feet spheres-->
+
+    <joint name="second_up_left_arm_foot_up_left_arm_sphere_joint" type="fixed">
+        <parent link="second_up_left_arm_link"/>
+        <child link="foot_up_left_arm_sphere_link"/>
+        <origin xyz="0 ${arm_length + sphere_radius} ${-sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="second_up_right_arm_foot_up_right_arm_sphere_joint" type="fixed">
+        <parent link="second_up_right_arm_link"/>
+        <child link="foot_up_right_arm_sphere_link"/>
+        <origin xyz="0 ${arm_length + sphere_radius} ${-sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="second_down_left_arm_foot_down_left_arm_sphere_joint" type="fixed">
+        <parent link="second_down_left_arm_link"/>
+        <child link="foot_down_left_arm_sphere_link"/>
+        <origin xyz="0 ${arm_length + sphere_radius} ${-sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="second_down_right_arm_foot_down_right_arm_sphere_joint" type="fixed">
+        <parent link="second_down_right_arm_link"/>
+        <child link="foot_down_right_arm_sphere_link"/>
+        <origin xyz="0 ${arm_length + sphere_radius} ${-sphere_radius}" rpy="0 0 0"/>
+    </joint>
+
+</robot>

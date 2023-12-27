@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:property name="base_radius" value="0.15"/>
+    <xacro:property name="base_length" value="0.025"/>
+    <xacro:property name="arm_support_radius" value="0.02"/>
+    <xacro:property name="arm_support_length" value="0.025"/>
+    <xacro:property name="sphere_radius" value="0.02"/>
+    <xacro:property name="arm_radius" value="0.02"/>
+    <xacro:property name="arm_length" value="0.15"/>
+
+</robot>

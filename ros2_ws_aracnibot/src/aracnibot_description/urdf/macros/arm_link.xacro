@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="arm_link" params="prefix">
+        <link name="${prefix}_arm_link">
+            <visual>
+                <geometry>
+                    <cylinder radius="${arm_radius}" length="${arm_length}"/>
+                </geometry>
+                <origin xyz="0 ${arm_length/2.0 + sphere_radius} ${-sphere_radius}" rpy="${-pi/2.0} 0 0"/>
+                <material name="grey"/>
+            </visual>
+        </link>
+    </xacro:macro>
+
+</robot>
